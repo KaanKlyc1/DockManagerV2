@@ -1,0 +1,94 @@
+<div class="content">
+  <h1 style="text-align: center">Docks list</h1>
+  <% if (docks.length < 1) { %>
+  <h4 style="text-align: center">There are no docks to show. Add new one!</h4>
+  <% } else { %>
+  <table class="table table-bordered table-striped">
+    <tr>
+      <th>Code</th>
+      <th>name</th>
+      <th>Capacity</th>
+      <th>Description</th>
+      <th>Props</th>
+      <th>Actions</th>
+    </tr>
+    <% for (const dock of docks) { %>
+    <tr>
+      <td><%= dock.code %></td>
+      <td><%= dock.name %></td>
+      <td><%= dock.capacity %></td>
+      <td><%= dock.description %></td>
+      <td>{<%= JSON.stringify(dock.props) %>}</td>
+      <td>
+        <form action="/delete" method="POST">
+          <input type="hidden" name="dockId" value="<%= dock.id %>" />
+          <button
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('Do you want to delete dock with code <%= dock.code %>');"
+          >
+            Delete
+          </button>
+        </form>
+        <form action="/update" method="GET">
+          <input type="hidden" name="dockId" value="<%= dock.id %>" />
+          <button class="btn btn-primary btn-sm">Update</button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </table>
+  <% } %>
+
+  <h1 style="text-align: center">Dock Create</h1>
+  <div class="form">
+    <form action="/" method="POST">
+      <div class="form-group">
+        <input
+          type="text"
+          name="code"
+          class="form-control"
+          placeholder="Dock Code (Required. Must be unique!!!)"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          name="name"
+          class="form-control"
+          placeholder="Dock Name (Required!)"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          name="capacity"
+          class="form-control"
+          placeholder="Dock Capacity (Required!)"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          name="description"
+          class="form-control"
+          placeholder="Dock Description (Optional!)"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          name="propsKey"
+          class="form-control"
+          placeholder="Dock Props Key (Optional!)"
+        />
+        <input
+          type="text"
+          name="propsValue"
+          class="form-control"
+          placeholder="Dock Props Value (Optional!)"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+  </div>
+</div>
